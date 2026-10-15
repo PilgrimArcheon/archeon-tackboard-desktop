@@ -11,7 +11,7 @@
     "start": "electron .",
     "test": "node --test tests/*.test.cjs",
     "dist:win": "electron-builder --win nsis --x64 --publish never",
-    "dist:mac": "electron-builder --mac dmg zip --publish never",
+    "dist:mac": "electron-builder --mac dmg zip --x64 --publish never && electron-builder --mac dmg zip --arm64 --publish never",
     "pack:win": "electron-builder --win dir --x64",
     "pack:mac": "electron-builder --mac dir",
     "verify:release": "node scripts/release-preflight.cjs"
@@ -78,7 +78,8 @@
       "extendInfo": {
         "NSHighResolutionCapable": true
       },
-      "icon": "assets/icon.icns"
+      "icon": "assets/icon.icns",
+      "artifactName": "${productName}-${version}-${arch}.${ext}"
     },
     "dmg": {
       "title": "Install TackBoard",

@@ -2,6 +2,7 @@
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const { version } = require('../package.json');
 const platform = process.argv[2];
 const dir = path.join(__dirname, '..', 'dist');
 const files = fs.readdirSync(dir);
@@ -16,8 +17,11 @@ if (platform === 'windows-x64') {
 } else if (platform === 'macos-universal-architectures') {
   assert.equal(count('.dmg'), 2, `Expected two Mac DMGs. Found: ${names}`);
   assert.equal(count('.zip'), 2, `Expected two Mac ZIPs. Found: ${names}`);
-  const dmgs = names.filter(f => f.endsWith('.dmg'));
-  assert(dmgs.some(f => f.includes('arm64')) && dmgs.some(f => f.includes('x64')),
-    'Both Apple Silicon and Intel Mac DMGs are required');
+  for (const ext of ['dmg', 'zip']) {
+    for (const arch of ['x64', 'arm64']) {
+      const expected = `TackBoard-${version}-${arch}.${ext}`;
+      assert(names.includes(expected), `Missing ${arch} Mac ${ext.toUpperCase()} installer: ${expected}. Found: ${names}`);
+    }
+  }
 } else throw new Error(`Unknown build target ${platform}`);
 console.log(`Installer output OK (${platform}):\n${names.join('\n')}`);

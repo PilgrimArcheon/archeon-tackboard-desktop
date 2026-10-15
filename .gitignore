@@ -1,0 +1,25 @@
+node_modules/
+dist/
+release/
+out/
+*.log
+.env*
+!.env.example
+.DS_Store
+
+# Never package or commit personal notes and app runtime data
+*tackboard-backup*.json
+*tackboard-recovery*.json
+*.zip
+*.dmg
+*.exe
+*.blockmap
+
+# Native code-signing and local machine files
+*.p12
+*.pfx
+*.mobileprovision
+*.key
+*.pem
+*.cer
+*.crt

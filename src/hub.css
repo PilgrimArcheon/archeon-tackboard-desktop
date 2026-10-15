@@ -1,0 +1,210 @@
+/* TackBoard Desktop — cool mint / lagoon glass. The hub is a transparent,
+   frameless Electron window. Sticky-note colors remain board-controlled. */
+:root {
+  color-scheme: dark;
+  font-family: Inter, Manrope, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 13px;
+  color: #eafff9;
+  background: transparent;
+  --text: #ecfff9;
+  --muted: #abdbd7;
+  --sea: #98edcf;
+  --ice: #a6ecf3;
+  --panel: rgba(34, 91, 96, .35);
+  --border: rgba(187, 255, 238, .19);
+}
+* { box-sizing: border-box; }
+html, body { width: 100%; height: 100%; margin: 0; background: transparent !important; }
+body { overflow: hidden; }
+main {
+  height: 100vh;
+  width: 100%;
+  padding: 21px 21px 18px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-radius: 18px;
+  border: 1px solid rgba(185, 255, 240, .34);
+  background:
+    radial-gradient(ellipse at 8% 0%, rgba(84, 198, 186, .26), transparent 57%),
+    radial-gradient(ellipse at 100% 45%, rgba(55, 166, 200, .18), transparent 55%),
+    linear-gradient(155deg, rgba(18, 63, 68, .91), rgba(11, 40, 51, .91) 56%, rgba(13, 50, 55, .93));
+  -webkit-backdrop-filter: blur(30px) saturate(150%);
+  backdrop-filter: blur(30px) saturate(150%);
+  box-shadow: inset 0 1px 0 rgba(221, 255, 248, .16), 0 22px 48px rgba(0, 16, 25, .25);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(154, 233, 219, .3) transparent;
+}
+button, input, textarea, select { font: inherit; }
+button { border: 0; border-radius: 9px; background: none; color: inherit; cursor: pointer; }
+button:focus-visible { outline: 2px solid var(--ice); outline-offset: 3px; }
+button:hover { filter: brightness(1.08); }
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  -webkit-app-region: drag;
+  user-select: none;
+}
+.mark { width: 36px; height: 36px; flex: 0 0 36px; display: grid; place-items: center; }
+.mark img { display: block; width: 36px; height: 36px; object-fit: contain; }
+.brand strong { display: block; font-size: 19px; letter-spacing: -.065em; line-height: 1.05; }
+.brand strong span { color: #9deacf; }
+.brand small { display: block; font-size: 8px; letter-spacing: .13em; color: #9fd0cb; padding-top: 5px; }
+.brand > button {
+  -webkit-app-region: no-drag;
+  display: grid;
+  place-items: center;
+  flex: 0 0 30px;
+  width: 30px;
+  height: 30px;
+  font-size: 19px;
+  border: 1px solid rgba(200, 255, 248, .1);
+  background: rgba(161, 246, 228, .06);
+  color: #d7fffa;
+}
+.brand #openWeb { margin-left: auto; }
+.brand #hideHub { font-size: 21px; }
+.brand > button:hover { background: rgba(155, 244, 221, .2); }
+.intro { margin: 27px 0 20px; }
+.eyebrow { font-size: 9px; font-weight: 800; letter-spacing: .14em; color: #b8eae0; display: flex; justify-content: space-between; }
+.status { font-size: 9px; letter-spacing: .075em; color: #9eeccf; }
+.intro h1 { font-size: 24px; line-height: 1.2; letter-spacing: -.052em; margin: 12px 0 7px; color: #f1fffa; font-weight: 730; }
+.intro p { color: var(--muted); font-size: 11px; line-height: 1.65; margin: 0; }
+.panel {
+  border: 1px solid var(--border);
+  background: var(--panel);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  padding: 15px;
+  border-radius: 12px;
+  margin: 12px 0;
+  box-shadow: inset 0 1px 0 rgba(218, 255, 246, .055);
+}
+.panel > label, .grow { display: block; font-size: 9px; letter-spacing: .12em; font-weight: 800; color: #b1deda; margin-bottom: 8px; }
+.panel > input, .panel > select, .panel textarea, .panel .grow select { margin-bottom: 12px; }
+.panel select, .panel input:not([type=checkbox]), .panel textarea {
+  width: 100%; min-width: 0;
+  background: rgba(6, 41, 51, .62);
+  border: 1px solid rgba(156, 222, 219, .28);
+  color: #eafffc;
+  border-radius: 8px;
+  padding: 10px 11px;
+  font-size: 12px;
+  outline: none;
+}
+.panel select:focus, .panel input:focus, .panel textarea:focus { border-color: #9aeadd; box-shadow: 0 0 0 2px rgba(135, 238, 221, .12); }
+.panel select option { color: #eafff8; background: #103f48; }
+.panel input::placeholder, .panel textarea::placeholder { color: #8fbab9; }
+.row { display: flex; align-items: center; gap: 8px; margin-top: 9px; }
+.row span { font-size: 11px; color: #b1e1db; }
+.row button { white-space: nowrap; }
+.row input { margin: 0 !important; flex: 1; min-width: 0; }
+.primary {
+  background: linear-gradient(105deg, #a2efd0, #9ee5ec) !important;
+  color: #12474d !important;
+  font-weight: 800 !important;
+  padding: 11px 13px;
+  font-size: 11px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), 0 2px 12px rgba(93, 226, 195, .11);
+}
+.subtle {
+  background: rgba(135, 230, 221, .055) !important;
+  color: #c2f1e9 !important;
+  border: 1px solid rgba(177, 247, 234, .21) !important;
+  padding: 8px 10px;
+  font-size: 10px !important;
+}
+.heading { justify-content: space-between; margin: 0 0 12px; }
+.heading b { font-size: 12px; color: #e8fff7; }
+.heading .muted { font-size: 8px; letter-spacing: .08em; color: #a3caca; }
+.switch { display: flex !important; align-items: center; justify-content: space-between; font-size: 11px !important; letter-spacing: 0 !important; color: #def8f0 !important; font-weight: 500 !important; margin: 13px 0 !important; }
+.switch input { accent-color: #8ce9d8; width: 17px; height: 17px; }
+.help { font-size: 10px; color: #a5d6d0; line-height: 1.7; margin: 10px 0 0; }
+.paste-tip { margin: -6px 0 12px; color: #a8d8d3; font-size: 10px; line-height: 1.45; }
+#token { border-color: rgba(150, 234, 216, .39); }
+.grow { flex: 1; }
+.grow select { display: block; margin-top: 8px; }
+.hidden { display: none !important; }
+footer { display: flex; justify-content: space-between; margin: 20px 0 2px; color: #a2ceca; font-size: 8px; letter-spacing: .12em; }
+footer button { font-size: 10px; letter-spacing: normal; color: #cbf9ee; text-decoration: underline; }
+#message.warn { color: #ffd7ca; }
+.recent { margin-top: 17px; border-top: 1px solid rgba(176, 247, 234, .19); }
+.recent-title { font-size: 9px; letter-spacing: .12em; font-weight: 800; color: #a2e7d5; margin: 14px 0 7px; }
+.recent-row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 5px 0; }
+.recent-row span { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #c0e6df; font-size: 11px; }
+.recent-row button { padding: 5px 9px; font-size: 10px; }
+.recent-row:hover span { color: #f1fffc; }
+.task-editor { margin-top: 14px; border-top: 1px solid rgba(176, 247, 234, .19); padding-top: 12px; }
+.edit-task { display: flex; align-items: center; gap: 7px; margin: 7px 0; }
+.edit-task input[type=checkbox] { accent-color: #86e7d8; width: 16px; height: 16px; }
+.edit-task input[type=text] { margin: 0; flex: 1; min-width: 0; }
+.edit-task button { font-size: 20px; padding: 5px; }
+@media (prefers-reduced-transparency: reduce) {
+  main { background: #143f47; }
+  .panel { background: #20545a; }
+}
+
+/* One clean board screen. Every other action lives in Settings. */
+.brand-words{flex:1;min-width:0}
+.brand #settingsToggle{margin-left:auto}
+.front-view{margin-top:54px;display:grid;gap:9px}
+.front-view>label{font-size:9px;font-weight:800;letter-spacing:.15em;color:#a4e2d5}
+.front-view select{width:100%;border-radius:10px;padding:13px 14px;background:rgba(7,44,49,.62);color:#e8fff7;border:1px solid rgba(153,233,218,.36);font:inherit;font-weight:650;outline:none;cursor:pointer}
+.front-view select:focus-visible{outline:2px solid var(--sea);outline-offset:3px}
+.front-view select option{background:#103f48;color:#eafff8}
+.settings-view{margin-top:20px}
+.settings-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:20px}
+.settings-heading h1{font-size:23px;letter-spacing:-.05em;margin:5px 0 0}
+.settings-view .panel:first-of-type{margin-top:0}
+.edit-view{margin-top:20px}
+.edit-view .grow select{width:100%}
+@media(prefers-reduced-transparency:reduce){.front-view select{background:#194e53}}
+
+/* Cross-platform mint glass appearance. System uses Electron nativeTheme; reduced-transparency
+   accessibility preference takes precedence over backdrop effects. */
+:root[data-theme="light"]{color-scheme:light;--text:#123d42;--muted:#527b7b;--sea:#146d67;--ice:#187f8c;--panel:rgba(231,255,250,.62);--border:rgba(34,122,117,.22)}
+:root[data-theme="light"] main{border-color:rgba(130,231,213,.75);background:radial-gradient(ellipse at 10% 4%,rgba(157,250,221,.75),transparent 65%),radial-gradient(ellipse at 100% 60%,rgba(172,228,249,.42),transparent 56%),linear-gradient(135deg,rgba(232,255,248,.95),rgba(200,237,238,.92));box-shadow:inset 0 1px 0 #fff,0 18px 48px rgba(8,67,71,.14)}
+:root[data-theme="light"] :is(.brand strong,.intro h1,.settings-heading h1,.heading b,.switch,.front-view select,.panel label,.recent-row span,.panel .grow,.edit-task,.status){color:#14484a!important}
+:root[data-theme="light"] :is(.intro p,.help,.paste-tip,.front-view>label,.brand small,.eyebrow,.front-view select option,.row span,.recent-title,.muted,footer){color:#3e7473!important}
+:root[data-theme="light"] :is(.front-view select,.panel input:not([type=checkbox]),.panel select,.panel textarea){background:rgba(250,255,255,.68);color:#15494d;border-color:rgba(50,138,132,.31)}
+:root[data-theme="light"] :is(.panel select option,.front-view select option){background:#ecfdf8;color:#164b50}
+:root[data-theme="light"] :is(.brand>button,.subtle){background:rgba(29,124,123,.08)!important;color:#17555a!important;border-color:rgba(30,114,110,.22)!important}
+:root[data-theme="light"] :is(.panel,.front-view select){box-shadow:inset 0 1px 0 rgba(255,255,255,.6)}
+:root[data-theme="light"] .panel input::placeholder{color:#698f8a}
+:root[data-theme="light"] #message.warn{color:#963b39!important}
+:root[data-theme="dark"]{color-scheme:dark}
+@media(prefers-reduced-transparency:reduce){
+  :root[data-theme="light"] main{background:#e4f4ed}
+  :root[data-theme="light"] .panel{background:#effaf6}
+  :root[data-theme="dark"] main{background:#113a42}
+  :root[data-theme="dark"] .panel{background:#235258}
+}
+
+/* v0.5 desktop layout: board and quick add live together on the uncluttered home. */
+.front-view{margin-top:27px;gap:12px}
+.front-add{margin-top:11px;padding:15px 14px 13px;border:1px solid var(--border);border-radius:12px;background:var(--panel);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.front-add .heading{margin-bottom:10px}
+.front-add .heading b{font-size:10px;letter-spacing:.07em}
+.front-add .row{margin-top:0}
+.front-add input{flex:1;min-width:0;background:rgba(6,41,51,.52);border:1px solid rgba(156,222,219,.28);border-radius:8px;padding:11px 10px;color:#eafffc;font-size:12px;outline:none}
+.front-add input::placeholder{color:#9fc8c3}
+.front-add button{flex-shrink:0}
+.front-view .recent{margin-top:3px}
+.front-view .recent-row{padding:5px 0}
+.front-view .recent-title{margin-top:9px}
+.front-footer{margin-top:8px}
+:root[data-theme="light"] .front-add input{background:rgba(250,255,255,.68);color:#15494d;border-color:rgba(50,138,132,.31)}
+:root[data-theme="light"] .front-add input::placeholder{color:#698f8a}
+
+/* Connection controls: show pairing OR account, never both. */
+#connectedControls .connected-label { flex: 1; font-weight: 700; color: var(--sea); }
+#recoveryControls { flex-wrap: wrap; }
+#recoveryHint { flex: 1; min-width: 130px; }
+
+/* Manage boards inside the existing dropdown; keep the main screen uncluttered. */
+.board-editor{margin:10px 0 6px;padding:12px;background:var(--panel);border:1px solid var(--border);border-radius:12px}
+.board-editor .row{margin-top:8px;flex-wrap:wrap}
+.board-editor input{flex:1;min-width:125px;border-radius:8px;border:1px solid var(--border);padding:10px;background:rgba(12,50,55,.7);color:#eafffc}
+.pairing-controls{display:flex;flex-direction:column;gap:10px}
+.pairing-controls .help{line-height:1.6;margin:0}
+:root[data-theme="light"] .board-editor input{background:rgba(250,255,255,.75);color:#134b4c}

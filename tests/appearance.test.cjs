@@ -1,0 +1,4 @@
+const test=require('node:test');const assert=require('node:assert/strict');const fs=require('node:fs');const path=require('node:path');
+const src=path.join(__dirname,'../src');const main=fs.readFileSync(path.join(src,'main.cjs'),'utf8');const css=fs.readFileSync(path.join(src,'hub.css'),'utf8');const html=fs.readFileSync(path.join(src,'hub.html'),'utf8');
+test('theme preference is validated, persisted and reflects native OS changes',()=>{assert.match(main,/theme:'system'/);assert.match(main,/nativeTheme\.on\('updated'/);assert.match(main,/ipcMain\.handle\('tb:theme'/);assert.match(main,/effectiveTheme:effectiveTheme\(\)/);});
+test('Light/dark mint-glass themes have matching UI and accessible appearance switch',()=>{assert.match(html,/id="appearance"/);assert.match(css,/data-theme="light"/);assert.match(css,/data-theme="dark"/);assert.match(css,/prefers-reduced-transparency/);});

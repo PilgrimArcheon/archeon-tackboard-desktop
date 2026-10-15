@@ -1,0 +1,28 @@
+'use strict';
+const {contextBridge,ipcRenderer}=require('electron');
+contextBridge.exposeInMainWorld('tack',Object.freeze({
+ state:()=>ipcRenderer.invoke('tb:state'),
+ onState:(callback)=>{const f=(_event,data)=>callback(data);ipcRenderer.on('tack:state',f);return ()=>ipcRenderer.removeListener('tack:state',f);},
+ operate:op=>ipcRenderer.invoke('tb:operation',op),
+ chooseBoard:id=>ipcRenderer.invoke('tb:board',id),
+ openHub:()=>ipcRenderer.invoke('tb:hub'),
+ hideHub:()=>ipcRenderer.invoke('tb:hide-hub'),
+ hubView:view=>ipcRenderer.invoke('tb:hub-view',view),
+ editNote:id=>ipcRenderer.invoke('tb:edit-note',id),
+ onEdit:callback=>{const f=(_event,id)=>callback(id);ipcRenderer.on('tack:edit',f);return ()=>ipcRenderer.removeListener('tack:edit',f);},
+ visibility:v=>ipcRenderer.invoke('tb:visibility',v),
+ onTop:v=>ipcRenderer.invoke('tb:on-top',v),
+ theme:theme=>ipcRenderer.invoke('tb:theme',theme),
+ noteSize:size=>ipcRenderer.invoke('tb:note-size',size),
+ noteSizeFor:(id,size)=>ipcRenderer.invoke('tb:note-size-for',id,size),
+ expand:id=>ipcRenderer.invoke('tb:expand',id),
+ expanded:id=>ipcRenderer.invoke('tb:note-expanded',id),
+ connect:p=>ipcRenderer.invoke('tb:connect',p),
+ review:p=>ipcRenderer.invoke('tb:review',p),
+ disconnect:()=>ipcRenderer.invoke('tb:disconnect'),
+ sync:()=>ipcRenderer.invoke('tb:sync'),
+ backup:()=>ipcRenderer.invoke('tb:backup'),
+ backupRecovery:()=>ipcRenderer.invoke('tb:backup-recovery'),
+ loginItem:v=>ipcRenderer.invoke('tb:login-item',v),
+ openWeb:()=>ipcRenderer.invoke('tb:web'),
+}));

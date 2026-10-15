@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>TackBoard Desktop</title><link rel="stylesheet" href="hub.css"></head><body>
+<main>
+  <header class="brand">
+    <div class="mark"><img src="../assets/icon.png" width="36" height="36" alt="TackBoard icon"></div>
+    <div class="brand-words"><strong>tackboard<span>.</span></strong><small>MAKE ROOM FOR DOING.</small></div>
+    <button id="settingsToggle" title="Settings" aria-label="Open settings" aria-expanded="false" aria-controls="settingsView">⚙</button>
+    <button id="hideHub" title="Hide to menu bar / tray" aria-label="Hide TackBoard">×</button>
+  </header>
+  <section id="frontView" class="front-view" aria-label="Active board">
+    <label for="boards">ACTIVE BOARD</label>
+    <select id="boards" aria-label="Choose active board or manage boards"></select>
+    <div id="boardEditor" class="board-editor hidden" aria-label="Create or rename a board">
+      <label id="boardEditLabel" for="boardName">BOARD NAME</label>
+      <form id="boardForm" class="row"><input id="boardName" maxlength="80" placeholder="Board name" required><button class="primary" type="submit">Save</button><button class="subtle" id="boardCancel" type="button">Cancel</button></form>
+    </div>
+    <div class="front-add"><div class="row heading"><b>NEW STICKY NOTE</b><span class="muted">SELECTED BOARD</span></div>
+      <form id="quickAdd" class="row"><input id="quickTitle" maxlength="90" placeholder="Write a new sticky note…" aria-label="New sticky note title" required><button type="submit" class="primary">Add +</button></form>
+    </div>
+    <div id="recent" class="recent" aria-live="polite"></div>
+    <footer class="front-footer"><button id="openWebBottom">Full web pinboard ↗</button><span>ARCHEON · TACKBOARD</span></footer>
+  </section>
+  <section id="settingsView" class="settings-view hidden" aria-label="TackBoard settings">
+    <div class="settings-heading"><div><span class="eyebrow">PREFERENCES</span><h1>Settings</h1></div></div>
+    <div class="panel"><label for="appearance">APPEARANCE</label><select id="appearance" aria-label="App appearance"><option value="system">Follow system</option><option value="light">Light mint glass</option><option value="dark">Dark lagoon glass</option></select><p class="help">Your choice is saved on this computer. The sticky note colors stay the same.</p></div>
+    <div class="panel"><label for="noteSize">STICKY NOTE SIZE</label><select id="noteSize"><option value="small">Small · minimal</option><option value="medium">Medium · balanced</option><option value="large">Large · detailed</option></select><p class="help">Small notes stay clickable. Use ⤢ on a note to temporarily expand it for more room.</p></div>
+    <div class="panel"><div class="row heading"><b>Desktop behavior</b><span class="muted">WINDOWS / MAC</span></div>
+      <label class="switch"><span>Keep notes above other apps</span><input id="onTop" type="checkbox"></label>
+      <label class="switch"><span>Launch when I sign in</span><input id="launch" type="checkbox"></label>
+      <div class="row"><button id="toggleVisible" class="subtle">Hide notes</button><span id="count">0 active notes</span></div>
+      <p class="help">Drag a note by its grip. Notes snap to screen edges and keep their position across connected monitors.</p>
+    </div>
+    <div class="panel"><div class="row heading"><b>Account & cloud</b><button id="sync" class="subtle">↻ Sync now</button></div>
+      <p class="help">Connect to your existing Archeon account. Cloud updates arrive quietly in the background.</p>
+      <div id="pairingControls" class="pairing-controls">
+        <p class="help"><strong>Connecting replaces all local boards, sticky notes and unsynced edits with your cloud version.</strong> Export a backup first if you want to keep anything currently on this computer.</p>
+        <button id="exportBeforeConnect" class="subtle" type="button">↓ Export local backup</button>
+        <label for="token">PAIRING KEY</label><input id="token" type="password" autocomplete="off" spellcheck="false" placeholder="Paste pairing key from web" /><p class="paste-tip">Right-click → Paste · or ⌘V / Ctrl+V</p>
+        <button id="connect" class="primary" type="button">Connect account</button>
+      </div>
+      <div id="connectedControls" class="row hidden"><span class="connected-label">Connected to Archeon</span><button id="disconnect" class="subtle">Disconnect</button></div>
+      <div id="recoveryControls" class="row hidden"><button id="review" class="subtle">Review queued edits</button><span id="recoveryHint" class="muted"></span></div>
+      <div id="message" class="help" role="status">Generate a pairing key from the TackBoard web app.</div>
+      <div class="row"><span id="status" class="status">LOCAL</span><button id="openWeb" class="subtle">Open web board ↗</button></div>
+      <div class="row"><button id="backup" class="subtle">↓ Export notes backup</button><span id="cloudAccount" class="muted" title="Use this account ID to confirm devices share the same account"></span></div>
+      <div class="row"><button id="backupRecovery" class="subtle">↓ Export complete recovery backup</button></div>
+    </div>
+  </section>
+  <section id="editPanel" class="panel hidden edit-view" aria-label="Edit a sticky note">
+    <div class="row heading"><b>Edit sticky note</b><button id="cancelEdit" class="subtle">← Back</button></div>
+    <label for="editTitle">TITLE</label><input id="editTitle" maxlength="90"><label for="editBody">DESCRIPTION</label><textarea id="editBody" rows="3" maxlength="1200"></textarea>
+    <label for="editSize">DESKTOP NOTE SIZE</label><select id="editSize"><option value="default">Use default size</option><option value="small">Small</option><option value="medium">Medium</option><option value="large">Large</option></select>
+    <div class="row"><label class="grow">COLOR<select id="editColor"><option value="butter">Butter</option><option value="mint">Mint</option><option value="lilac">Lilac</option><option value="rose">Rose</option><option value="sky">Sky</option><option value="paper">Paper</option></select></label><label class="grow">STATUS<select id="editStatus"><option value="planned">Planned</option><option value="active">In progress</option><option value="review">Review</option><option value="done">Done</option></select></label></div>
+    <div class="task-editor"><div class="row heading"><b>Checklist</b><button id="addEditTask" class="subtle">+ Add task</button></div><div id="editTasks"></div></div>
+    <div class="row"><button id="saveEdit" class="primary">Save changes</button><button id="finishEdit" class="subtle">Complete & archive</button></div>
+  </section>
+</main><script src="hub.js"></script></body></html>
